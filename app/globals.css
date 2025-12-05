@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --neutral-900: #051513;
+  --neutral-800: #4C5C59;
+  --neutral-500: #899492;
+  --neutral-400: #C0CFCC;
+  --neutral-300: #DDE9EF;
+  --neutral-100: #E8F0EF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-100: var(--neutral-100);
+  --color-teal-700: #014745;
+  --color-teal-800: #013C3B;
+  --color-red-600: #FD4740;
+  --color-red-800: #CB0A04;
+  /* --color-foreground: var(--foreground); */
+  --font-manrope: var(--font-manrope);
+  --text-set1: 1.5rem; /* 24px */
+  --text-set2: 1.25rem; /* 20px */
+  --text-set3: 1rem; /* 16px */
+  --text-set4: 0.875rem; /* 14px */
+  --text-set5: 0.75rem; /* 12px */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --neutral-900: #001414;
+    --neutral-800: #001f1f;
+    --neutral-600: #002e2d;
+    --neutral-500: #004241;
+    --neutral-400: #004746;
+    --neutral-300: #00706e;
+    --neutral-100: #b1b9b9;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* body {
+  /* background: var(--n-500); 
+  color: var(--n-800);
+  /* font-family: Arial, Helvetica, sans-serif; 
+} */
+
+.login-input{
+  @apply 
+  block 
+  w-full 
+  outline 
+  p-2 
+  rounded-lg 
+  mt-2 
+  hover:bg-neutral-100 
+  focus:ring-2 
+  focus:ring-teal-700 
+  dark:ring-offset-neutral-900
+  ring-offset-3 
+  dark:bg-(--neutral-600)
+  dark:hover:bg-(--neutral-500)
+  ; 
+}
+
+.login-links{
+  @apply 
+  text-neutral-900 
+  hover:text-teal-700 
+  font-bold 
+  focus:border-2 
+  focus:border-teal-700 
+  focus:p-1 
+  focus:rounded-lg 
+  dark:text-white
+  dark:hover:text-neutral-100;
 }
