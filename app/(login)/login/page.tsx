@@ -4,6 +4,8 @@ import Link from "next/link";
 import LogoLight from "@/public/logo-light-theme.svg";
 import LogoDark from "@/public/logo-dark-theme.svg";
 import { useForm } from "react-hook-form";
+import { login } from "./action";
+import {toast} from 'sonner';
 
 interface LoginFormData {
   email: string;
@@ -14,11 +16,26 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormData>();
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    const res = await login(data);
+    if (res?.error) {
+      if (res.error.includes("fetch failed")){
+        toast.error("Login failed", {
+          description: "Please check your internet connection and try again.",
+          duration: 4000,
+          position: "top-right",
+        });
+      }else{
+        toast.error("Login failed", {
+          description: res.error,
+          duration: 4000,
+          position: "top-right",
+        });
+      }
+    }
   };
 
   return (
@@ -73,7 +90,10 @@ export default function LoginPage() {
               />
             </label>
             {errors.email && (
-              <p className="dark:text-red-600 text-red-800 text-set4 mt-2">
+              <p
+                className="dark:text-red-600 text-red-800 text-set4 mt-2"
+                role="alert"
+              >
                 {errors.email.message}
               </p>
             )}
@@ -98,14 +118,22 @@ export default function LoginPage() {
                 })}
               />
             </label>
-              {errors.password && (
-                <p className="dark:text-red-600 text-red-800 text-set4 mt-2">
-                  {errors.password.message}
-                </p>
-              )}
+            {errors.password && (
+              <p
+                className="dark:text-red-600 text-red-800 text-set4 mt-2"
+                role="alert"
+              >
+                {errors.password.message}
+              </p>
+            )}
           </div>
-          <button className="bg-teal-700 hover:bg-teal-800 w-full rounded-lg py-3 px-4 cursor-pointer text-set3 text-white focus:ring-2 focus:ring-teal-700 ring-offset-3">
-            Log in
+          <button
+            className="auth-Btn"
+            aria-label="Create account"
+            aria-busy={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Logging in..." : "Log in"}
           </button>
         </form>
 

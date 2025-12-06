@@ -5,6 +5,8 @@ import Link from "next/link";
 import LogoLight from "@/public/logo-light-theme.svg";
 import LogoDark from "@/public/logo-dark-theme.svg";
 import { useForm } from "react-hook-form";
+import { signup } from "./actions";
+import { toast } from "sonner";
 
 interface SignUpFormData {
   name: string;
@@ -16,11 +18,17 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>();
 
-  const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormData) => {
+    const res = await signup(data);
+    if (res?.error) {
+      toast.error(res.error, {
+        duration: 4000,
+        position: "top-right",
+      });
+    }
   };
 
   return (
@@ -55,6 +63,7 @@ export default function SignUpPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
           noValidate
+          aria-label="Sign up form"
         >
           <div>
             <label
@@ -76,7 +85,7 @@ export default function SignUpPage() {
               />
             </label>
             {errors.name && (
-              <p className="text-red-800 dark:text-red-600 text-sm mt-2">
+              <p className="text-red-800 dark:text-red-600 text-sm mt-2" role="alert">
                 {errors.name.message}
               </p>
             )}
@@ -106,7 +115,7 @@ export default function SignUpPage() {
               />
             </label>
             {errors.email && (
-              <p className="dark:text-red-600 text-red-800 text-sm mt-2">
+              <p className="dark:text-red-600 text-red-800 text-sm mt-2" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -136,20 +145,25 @@ export default function SignUpPage() {
               />
             </label>
             {errors.password && (
-              <p className="dark:text-red-600 text-red-800 text-sm mt-2">
+              <p className="dark:text-red-600 text-red-800 text-sm mt-2" role="alert">
                 {errors.password.message}
               </p>
             )}
           </div>
-          <button className="bg-teal-700 hover:bg-teal-800 w-full rounded-lg py-3 px-4 cursor-pointer text-set3 text-white focus:ring-2 focus:ring-teal-700 ring-offset-3">
-            Create account
+          <button
+            className="auth-Btn"
+            aria-label="Create account"
+            aria-busy={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Creating account..." : "Create account"}
           </button>
         </form>
 
         <div className="flex flex-col items-center w-full gap-3">
           <p className="text-set4 font-medium text-neutral-800 dark:text-neutral-100">
             Already have an account?{" "}
-            <Link href="/login" className="login-links">
+            <Link href="/login" className="login-links" aria-label="Go to login page">
               Log in
             </Link>
           </p>
