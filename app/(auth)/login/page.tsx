@@ -4,7 +4,7 @@ import Link from "next/link";
 import LogoLight from "@/public/logo-light-theme.svg";
 import LogoDark from "@/public/logo-dark-theme.svg";
 import { useForm } from "react-hook-form";
-import { login } from "./action";
+import { loginAction } from "../../actions/authActions";
 import {toast} from 'sonner';
 
 interface LoginFormData {
@@ -20,7 +20,7 @@ export default function LoginPage() {
   } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
-    const res = await login(data);
+    const res = await loginAction(data);
     if (res?.error) {
       if (res.error.includes("fetch failed")){
         toast.error("Login failed", {
