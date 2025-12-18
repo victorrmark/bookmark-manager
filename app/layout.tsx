@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
+
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
@@ -41,7 +42,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div>This will appear everywhere</div>
           {children}
         </ThemeProvider>
         <Toaster position="top-right" />
