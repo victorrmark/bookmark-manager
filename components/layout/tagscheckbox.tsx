@@ -25,14 +25,17 @@ const filters = [
 
 export function TagsCheckbox() {
   return (
+    <>
+    <div className="w-full px-3 font-bold text-set5 text-[#4d4d4d] dark:text-neutral-100">TAGS</div>
     <div className="no-scrollbar max-h-96 overflow-y-auto">
         {filters.map((filter) => (
-          <div key={filter.value} className="flex items-center gap-3 w-full py-3 px-2">
+          <div key={filter.value} className="flex items-center gap-3 w-full px-2 py-3">
             <Checkbox id={filter.value} />
             <Label htmlFor={filter.value}>{filter.label}</Label>
-            <div className="ml-auto">{filter.badge}</div>
+            <div className="ml-auto rounded-full bg-neutral-100 dark:bg-(--neutral-600) border-2 border-neutral-300 dark:border-neutral-400 p-2 h-7 w-7 flex items-center justify-center text-set5 text-neutral-800 dark:text-white">{filter.badge}</div>
           </div>
         ))}
     </div>
+    </>
   );
 }
