@@ -1,5 +1,6 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import Header from "@/components/layout/header";
 
 export default function DashboardLayout({
   children,
@@ -10,8 +11,9 @@ export default function DashboardLayout({
     <>
       <SidebarProvider>
         <AppSidebar />
-        <main>
-          <SidebarTrigger />
+        <main className="w-full">
+          <Header />
+          {/* <SidebarTrigger /> */}
           {children}
         </main>
       </SidebarProvider>

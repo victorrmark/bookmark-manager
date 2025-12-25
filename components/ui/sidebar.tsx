@@ -267,14 +267,14 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-7 lg:hidden", className)}
+      className={cn("size-7 lg:hidden ", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      {openMobile && isMobile ? <div className="cursor-pointer p-2"><X /> </div>: <div className="outline outline-neutral-400 rounded p-3 dark:outline-neutral-400 cursor-pointer"><Menu /></div>}
+      {openMobile && isMobile ? <div className="cursor-pointer p-2 "><X /> </div>: <div className="outline outline-neutral-400 rounded p-3 dark:outline-neutral-400 cursor-pointer"><Menu /></div>}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
@@ -519,7 +519,7 @@ function SidebarMenuButton({
       data-size={size}
       data-active={isActive}
       // className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-      className={cn("text-set3 flex items-center text-neutral-800 dark:text-neutral-100 gap-3 w-full  rounded-md p-2 data-[active=true]:bg-neutral-100 dark:data-[active=true]:bg-(--neutral-600) data-[active=true]:text-neutral-900 dark:data-[active=true]:text-white data-[active=true]:font-medium [&>svg]:size-4 [&>svg]:shrink-0")}
+      className={cn("text-set3 flex items-center text-neutral-800 dark:text-neutral-100 gap-3 w-full  rounded-md p-2 data-[active=true]:bg-neutral-100 dark:data-[active=true]:bg-(--neutral-600) data-[active=true]:text-neutral-900 dark:data-[active=true]:text-white data-[active=true]:font-medium [&>svg]:size-4 [&>svg]:shrink-0 focus:outline-none focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2")}
       {...props}
     />
   )
