@@ -1,8 +1,9 @@
-"use server"
+"use server";
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { revalidatePath } from 'next/cache'
+import { revalidatePath } from "next/cache";
+import { toast } from "sonner";
 
 interface LoginType {
   email: string;
@@ -14,26 +15,26 @@ interface RegisterType extends LoginType {
 }
 
 export async function loginAction(formData: LoginType) {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const data = {
     email: formData.email,
     password: formData.password,
-  }
+  };
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    return { error: error.message }
+    return { error: error.message };
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
-//   return { success: true }
+  revalidatePath("/", "layout");
+  redirect("/");
+  //   return { success: true }
 }
 
 export async function signupAction(formData: RegisterType) {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const data = {
     email: formData.email,
@@ -43,16 +44,16 @@ export async function signupAction(formData: RegisterType) {
         display_name: formData.name,
       },
     },
-  }
+  };
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    return { error: error.message }
+    return { error: error.message };
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath("/", "layout");
+  redirect("/");
 }
 
 export async function logoutAction() {
@@ -60,8 +61,12 @@ export async function logoutAction() {
 
   const { error } = await supabase.auth.signOut();
   if (error) {
-    // console.log("Error logging out:", error.message);
-    return {error: error.message};
+    toast.error("Logout failed", {
+      description: error.message,
+      duration: 4000,
+      position: "top-right",
+    });
+
   }
   redirect("/login");
-};
+}

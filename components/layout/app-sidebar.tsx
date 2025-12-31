@@ -35,7 +35,7 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar>
+    <Sidebar className="border-neutral-300 dark:border-neutral-500">
       <SidebarHeader>
         <div className="flex w-full justify-between">
           {" "}

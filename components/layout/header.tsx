@@ -1,6 +1,7 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Search, Plus } from "lucide-react";
 import { UserAvatar } from "./avatar";
+import AddBookmark from "./addBookmark";
 
 export default function Header() {
   return (
@@ -38,7 +39,7 @@ export default function Header() {
       </div>
 
       <div className="flex items-center gap-3.5">
-        <button
+        {/* <button
           type="button"
           className="
             flex items-center gap-2
@@ -52,8 +53,8 @@ export default function Header() {
         >
           <Plus className="size-5" />
           <p className="hidden md:block text-set3">Add Bookmark</p>
-        </button>
-
+        </button> */}
+        <AddBookmark />
         <UserAvatar />
       </div>
     </header>

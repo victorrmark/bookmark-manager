@@ -58,7 +58,7 @@ export function ThemeToggle() {
 
   return (
     <div
-      className="flex bg-neutral-300 dark:bg-neutral-500 rounded-xl p-0.5 focus:ring-2 focus:ring-teal-700 
+      className="flex bg-neutral-300 dark:bg-neutral-500 rounded-lg p-0.5 focus:ring-2 focus:ring-teal-700 
                   dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2 focus:outline-none"
       role="radiogroup"
       aria-label="Theme"
@@ -77,10 +77,11 @@ export function ThemeToggle() {
             key={value}
             role="radio"
             aria-checked={selected}
+            tabIndex={-1}
             // tabIndex={selected ? 0 : -1}
             // variant={theme === value ? "secondary" : "ghost"}
             className={cn(
-              "justify-start gap-2 px-3 py-3 rounded-xl transition-all duration-500 cursor-pointer",
+              "justify-start gap-2 px-2.5 py-2.5 rounded-lg transition-all duration-500 cursor-pointer",
               // theme === value && "font-medium",
               theme === value
                 ? "bg-white dark:bg-(--neutral-600) text-neutral-900 dark:text-white"
