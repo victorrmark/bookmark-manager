@@ -89,7 +89,7 @@ export default function AddBookmark() {
         <button
           type="button"
           className="
-            flex items-center gap-2
+            flex items-center gap-2 cursor-pointer transition duration-300
             bg-teal-700 text-white
             p-2.5 sm:px-4 sm:py-3
             rounded-md hover:bg-teal-800

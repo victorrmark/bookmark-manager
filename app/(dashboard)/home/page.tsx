@@ -1,18 +1,16 @@
-import { logoutAction } from "@/app/actions/authActions";
-
+// import { ArrowDownUp } from "lucide-react";
 
 export default async function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center  font-sans ">
-      {/* <ThemeToggle /> */}
-      <div>
-        <p className="text-2xl text-white dark:text-neutral-300">
-          Welcome to Bookmark Manager!
-        </p>
-        {/* <form action={logoutAction}>
-          <button className="auth-Btn">Logout</button>
-        </form> */}
-      </div>
-    </div>
+    <>
+      {Array.from({ length: 30 }).map((_, index) => (
+        <div
+          key={index}
+          className="w-[100px] h-[100px] outline outline-red-500"
+        >
+          Bookmark {index + 1}
+        </div>
+      ))}
+    </>
   );
 }

@@ -20,13 +20,13 @@ export function UserAvatar() {
 
   return (
     <Popover>
-      <PopoverTrigger className="rounded-full focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 focus:outline-none data-[state=open]:ring-2 data-[state=open]:ring-teal-700 dark:data-[state=open]:ring-neutral-100">
+      <PopoverTrigger className="rounded-full focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 cursor-pointer ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 focus:outline-none data-[state=open]:ring-2 data-[state=open]:ring-teal-700 dark:data-[state=open]:ring-neutral-100">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </PopoverTrigger>
-      <PopoverContent className="border-neutral-100 bg-white dark:bg-(--neutral-600) dark:border-neutral-500 focus:outline-red-500 ">
+      <PopoverContent className="border-neutral-100 bg-white dark:bg-(--neutral-600) dark:border-neutral-500 shadow-md ">
         <div className="flex px-4 py-3 items-center gap-3">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />

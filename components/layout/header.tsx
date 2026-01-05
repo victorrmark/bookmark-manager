@@ -6,12 +6,11 @@ import AddBookmark from "./addBookmark";
 export default function Header() {
   return (
     <header
+     /*fixed top-0 right-0 z-50 lg:w-[calc(100%-18.5rem)] lg:left-[18.5rem] */ 
       className="
-        fixed top-0 right-0 z-50
-        w-full lg:w-[calc(100%-18.5rem)] lg:left-[18.5rem]
-        bg-white border-b border-neutral-300
+        w-full bg-white border-b border-neutral-300
         dark:bg-neutral-800 dark:border-neutral-500
-        px-4 py-8 sm:px-8 sm:py-4
+        px-4 py-8 sm:px-8 sm:py-4 shrink-0
         flex items-center justify-between
       "
     >

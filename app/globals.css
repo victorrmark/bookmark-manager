@@ -202,3 +202,12 @@ body {
 
 }
 
+.sort-items{
+  @apply
+  focus:bg-neutral-100 
+  hover:bg-neutral-100
+  dark:focus:bg-teal-700 
+  dark:hover:bg-teal-700
+
+}
+

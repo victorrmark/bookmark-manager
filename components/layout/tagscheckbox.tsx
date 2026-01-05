@@ -27,7 +27,7 @@ export function TagsCheckbox() {
   return (
     <>
     <div className="w-full px-3 font-bold text-set5 text-[#4d4d4d] dark:text-neutral-100">TAGS</div>
-    <div className="no-scrollbar max-h-96 overflow-y-auto px-2">
+    <div className="no-scrollbar overflow-y-auto px-2">
         {filters.map((filter) => (
           <div key={filter.value} className="flex items-center gap-3 w-full px-2 py-3">
             <Checkbox id={filter.value} />
