@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -15,11 +15,16 @@ import { useState, useRef, useEffect } from "react";
 
 import { Plus } from "lucide-react";
 
+interface Tag{
+  tag: string;
+  id: number;
+}
+
 interface BookmarkFormData {
   title: string;
   description: string;
   url: string;
-  tags: string[];
+  tags: Tag[];
 }
 
 export default function AddBookmark() {
@@ -42,30 +47,30 @@ export default function AddBookmark() {
     defaultValue: "",
   });
 
-  const TAGS = [
-    "AI",
-    "Community",
-    "CSS",
-    "Design",
-    "Framework",
-    "Git",
-    "HTML",
-    "JavaScript",
-    "Learning",
-    "Layout",
-    "Performance",
-    "Practice",
-    "Reference",
-    "Tips",
-    "Tools",
-    "Tutorial",
+  const TAGS: Tag[] = [
+    {tag: "AI", id: 1},
+    {tag: "Community", id: 2},
+    {tag: "CSS", id: 3},
+    {tag: "Design", id: 4},
+    {tag: "Framework", id: 5},
+    {tag: "Git", id: 6},
+    {tag: "HTML", id: 7},
+    {tag: "JavaScript", id: 8},
+    {tag: "Learning", id: 9},
+    {tag: "Layout", id: 10},
+    {tag: "Performance", id: 11},
+    {tag: "Practice", id: 12},
+    {tag: "Reference", id: 13},
+    {tag: "Tips", id: 14},
+    {tag: "Tools", id: 15},
+    {tag: "Tutorial", id: 16},
   ];
 
   const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [search, setSearch] = useState("");
   const containerRef = useRef(null);
 
-  /* ✅ Close dropdown on outside click */
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -78,13 +83,32 @@ export default function AddBookmark() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const onSubmit = (data: BookmarkFormData) => {
-    // Handle form submission
-    console.log("form submitted", data);
+  const onSubmit = async (data: BookmarkFormData) => {
+    try{
+      const response = await fetch("/api/bookmarks/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error adding bookmark:", errorData.error);
+      }
+
+      
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+    // setDialogOpen(false);
   };
 
+  // function getFaviconUrl(domain: string, size = 64) {
+  //   return `https://s2.googleusercontent.com/s2/favicons?domain_url=${domain}&sz=${size}`;
+  // }
+
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <button
           type="button"
@@ -118,7 +142,7 @@ export default function AddBookmark() {
           className="mt-4 flex flex-col gap-6"
         >
           <div
-            arial-label="Add bookmark form"
+            aria-label="Add bookmark form"
             className="flex flex-col gap-2.5"
           >
             <div>
@@ -245,6 +269,7 @@ export default function AddBookmark() {
                           shouldValidate: true,
                         });
                       }
+                      // console.log(getFaviconUrl(value));
                     },
                     pattern: {
                       value:
@@ -278,8 +303,8 @@ export default function AddBookmark() {
                     value.length > 0 || "Select at least one tag",
                 }}
                 render={({ field }) => {
-                  const filteredTags = TAGS.filter((tag) =>
-                    tag.toLowerCase().includes(search.toLowerCase())
+                  const filteredTags = TAGS.filter((tags) =>
+                    tags.tag.toLowerCase().includes(search.toLowerCase())
                   );
 
                   return (
@@ -291,20 +316,24 @@ export default function AddBookmark() {
                           errors.tags
                             ? "outline-red-800 dark:outline-red-600"
                             : "outline-neutral-500 dark:outline-neutral-300"
-                        } ${open ? "ring-2 ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2" : " "}`}
+                        } ${
+                          open
+                            ? "ring-2 ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2"
+                            : " "
+                        }`}
                       >
                         {field.value?.map((tag) => (
                           <span
-                            key={tag}
+                            key={tag.id}
                             className="flex items-center gap-1 bg-teal-700 text-white px-2 py-1 rounded-full text-sm"
                           >
-                            {tag}
+                            {tag.tag}
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 field.onChange(
-                                  field.value?.filter((t) => t !== tag)
+                                  field.value?.filter((t) => t.id !== tag.id)
                                 );
                               }}
                               className="hover:text-red-300"
@@ -334,26 +363,28 @@ export default function AddBookmark() {
                             </p>
                           )}
 
-                          {filteredTags.map((tag) => {
-                            const selected = field.value?.includes(tag);
+                          {filteredTags.map((tags) => {
+                            const selected = field.value?.map((t) => t.tag).includes(tags.tag);
 
                             return (
                               <button
-                                key={tag}
+                                key={tags.tag}
                                 type="button"
                                 onClick={() => {
                                   field.onChange(
                                     selected
-                                      ? field.value?.filter((t) => t !== tag)
-                                      : [...field.value, tag]
+                                      ? field.value?.filter((t) => t.tag !== tags.tag)
+                                      : [...field.value, tags]
                                   );
                                   setSearch("");
                                 }}
                                 className={`w-full text-left px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-(--neutral-500) ${
-                                  selected ? "bg-neutral-100 dark:bg-(--neutral-600) text-neutral-900 dark:text-white " : "text-neutral-800 dark:text-neutral-100"
+                                  selected
+                                    ? "bg-neutral-100 dark:bg-(--neutral-600) text-neutral-900 dark:text-white "
+                                    : "text-neutral-800 dark:text-neutral-100"
                                 }`}
                               >
-                                {tag}
+                                {tags.tag}
                               </button>
                             );
                           })}
@@ -373,12 +404,17 @@ export default function AddBookmark() {
           </div>
 
           <DialogFooter className="flex items-center w-full sm:justify-end">
-            <DialogClose asChild className="flex-1 sm:flex-none focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2 ">
-              <button className="cursor-pointer outline outline-neutral-400 rounded-xl px-4 py-3 hover:text-teal-700 dark:hover:text-neutral-100">Cancel</button>
+            <DialogClose
+              asChild
+              className="flex-1 sm:flex-none focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2 "
+            >
+              <button className="cursor-pointer outline outline-neutral-400 rounded-xl px-4 py-3 hover:text-teal-700 dark:hover:text-neutral-100">
+                Cancel
+              </button>
             </DialogClose>
 
             <button
-            className="flex-1 sm:flex-none cursor-pointer outline outline-neutral-400 rounded-xl px-4 py-3 bg-teal-700 text-white hover:bg-teal-800 focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2"
+              className="flex-1 sm:flex-none cursor-pointer outline outline-neutral-400 rounded-xl px-4 py-3 bg-teal-700 text-white hover:bg-teal-800 focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 ring-offset-white dark:ring-offset-neutral-800 ring-offset-2"
               // className="auth-Btn"
               type="submit"
               aria-label="Add Bookmark"
