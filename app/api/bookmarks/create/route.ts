@@ -1,16 +1,17 @@
 import { createClient } from "@/utils/supabase/server";
+import { NextResponse, NextRequest } from "next/server";
 
 interface Tag {
   tag: string;
   id: number;
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const supabase = await createClient();
 
   const { title, description, url, tags } = await req.json();
 
-  const faviron_url = `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}&sz=64`;
+  const favicon_url = `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}&sz=64`;
 
   const date = new Date();
 
@@ -29,14 +30,14 @@ export async function POST(req: Request) {
       title,
       description,
       url,
-      faviron_url,
+      favicon_url,
       created_at,
     })
     .select()
     .single();
 
   if (bookmarkError) {
-    return Response.json({ error: bookmarkError.message }, { status: 400 });
+    return NextResponse.json({ error: bookmarkError.message }, { status: 400 });
   }
 
   const bookmarkTags = tags.map((tag: Tag) => ({
@@ -52,8 +53,8 @@ export async function POST(req: Request) {
     // rollback bookmark if tag insert fails
     await supabase.from("bookmarks").delete().eq("id", bookmark.id);
 
-    return Response.json({ error: tagError.message }, { status: 400 });
+    return NextResponse.json({ error: tagError.message }, { status: 400 });
   }
 
-  return Response.json({ success: true, bookmark });
+  return NextResponse.json({ success: true, bookmark });
 }

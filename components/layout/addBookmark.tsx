@@ -13,6 +13,7 @@ import {
 import { useForm, useWatch, Controller } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
 
+
 import { Plus } from "lucide-react";
 
 interface Tag{
@@ -92,20 +93,20 @@ export default function AddBookmark() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error adding bookmark:", errorData.error);
+        // const errorData = await response.json();
+        const text = await response.text();
+        console.error("Error adding bookmark:", text);
+      }else{
+        setDialogOpen(false);
       }
 
       
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-    // setDialogOpen(false);
   };
 
-  // function getFaviconUrl(domain: string, size = 64) {
-  //   return `https://s2.googleusercontent.com/s2/favicons?domain_url=${domain}&sz=${size}`;
-  // }
+
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
