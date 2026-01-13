@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-
+import { ThemeProvider } from "@/providers/theme-provider";
+import { ReactQueryProvider as QueryClientProvider } from "@/providers/react-query-provider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: "Manage all bookmarks for easy access",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,29 +23,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Auto apply dark mode if system theme is dark
-              if (typeof window !== 'undefined' && 
-                  window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-              }
-            `,
-          }}
-        />
-      </head> */}
       <body className={`${manrope.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-        <Toaster position="top-right" />
+        <QueryClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster position="top-right" />
+        </QueryClientProvider>
       </body>
     </html>
   );
