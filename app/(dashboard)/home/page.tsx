@@ -1,4 +1,5 @@
 'use client'
+import BookmarkCard from "@/components/layout/bookmark-card";
 import { useBookmark } from "@/hooks/useBookmark";
 
 // async function fetchBookmarks() {
@@ -22,19 +23,13 @@ import { useBookmark } from "@/hooks/useBookmark";
 // }
 
 export default function Home() {
-  const { data, error } = useBookmark();
-  // const bookmarksData = await fetchBookmarks();
-  console.log("Bookmarks Data:", data);
+  const { data: bookmarks } = useBookmark();
+  // console.log("Bookmarks Data:", bookmarks);
 
   return (
     <>
-      {Array.from({ length: 30 }).map((_, index) => (
-        <div
-          key={index}
-          className="w-[100px] h-[100px] outline outline-red-500"
-        >
-          Bookmark {index + 1}
-        </div>
+      {bookmarks?.map((bookmark) => (
+        <BookmarkCard key={bookmark.id} bookmark={bookmark} />
       ))}
     </>
   );

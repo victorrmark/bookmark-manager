@@ -1,10 +1,11 @@
 'use client';
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import type { Bookmark } from "@/types/bookmark";
 
 
 export function useBookmark() {
-  return useQuery({
+  return useQuery<Bookmark[]>({
     queryKey: ["bookmark"],
     queryFn: async () => {
       const response = await fetch(`/api/bookmarks/fetch`);
@@ -15,3 +16,7 @@ export function useBookmark() {
     },
   });
 }
+
+// export function useCreateBookmark() {
+//   return useMutation({
+//     mutationFn: async (newBookmark:
