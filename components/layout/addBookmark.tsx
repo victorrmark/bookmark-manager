@@ -12,21 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { useForm, useWatch, Controller } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
-
-
+import {useCreateBookmark} from "@/hooks/useBookmark";
+import type { BookmarkFormData, Tag } from "@/types/bookmark-data";
 import { Plus } from "lucide-react";
 
-interface Tag{
-  tag: string;
-  id: number;
-}
-
-interface BookmarkFormData {
-  title: string;
-  description: string;
-  url: string;
-  tags: Tag[];
-}
 
 export default function AddBookmark() {
   const {
@@ -41,6 +30,8 @@ export default function AddBookmark() {
     },
     shouldUnregister: true,
   });
+
+  const {mutateAsync} = useCreateBookmark();
 
   const descriptionValue = useWatch({
     control,
@@ -85,25 +76,14 @@ export default function AddBookmark() {
   }, []);
 
   const onSubmit = async (data: BookmarkFormData) => {
-    try{
-      const response = await fetch("/api/bookmarks/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        // const errorData = await response.json();
-        const text = await response.text();
-        console.error("Error adding bookmark:", text);
-      }else{
-        setDialogOpen(false);
-      }
-
-      
+    try {
+      await mutateAsync(data);
+      setDialogOpen(false);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error adding bookmark:", error);
     }
+
+
   };
 
 
