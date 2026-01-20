@@ -20,7 +20,7 @@ export default function DashboardLayout({
             <BodyHeader />
       
             <div 
-              className="p-1 pb-6 h-full  overflow-scroll no-scrollbar w-full 
+              className="p-1 pb-6  overflow-scroll no-scrollbar w-full 
               grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8"
             >
               {children}

@@ -7,7 +7,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "bg-white flex flex-col rounded-[12px] shadow-sm dark:bg-neutral-800",
+        "bg-white flex flex-col rounded-[12px] shadow-sm dark:bg-neutral-800 ",
         className
       )}
       {...props}
@@ -20,7 +20,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "@container/card-header m-4 mb-0 pb-4 has-data-[slot=card-action]:grid-cols-[1fr_auto] border-b border-neutral-300 dark:border-(--nuetral-500) gap-3 ",
+        "@container/card-header m-4 mb-0 pb-4 has-data-[slot=card-action]:grid-cols-[1fr_auto] border-b border-neutral-300 dark:border-nuetral-500 gap-3 ",
         className
       )}
       {...props}

@@ -1,5 +1,5 @@
 'use client'
-import BookmarkCard from "@/components/layout/bookmark-card";
+import BookmarkCard from "@/components/layout/bookmarks-card";
 import { useBookmark } from "@/hooks/useBookmark";
 
 

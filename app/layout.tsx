@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: "Manage all bookmarks for easy access",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +32,19 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: "var(--toast-bg)",
+                color: "var(--toast-text)",
+                outline: "none",
+                border: "none",
+                marginLeft: "5px",
+              },
+            }}
+          />
         </QueryClientProvider>
       </body>
     </html>

@@ -19,6 +19,7 @@ export async function GET() {
   const { data: bookmarks, error } = await supabase
     .from("bookmarks")
     .select("*, bookmark_tags(tags(tag, id))")
+    .eq("is_archived", false)
     .eq("user_id", user?.id);
 
   if (error) {

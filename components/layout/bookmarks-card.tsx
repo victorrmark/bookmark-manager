@@ -7,8 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BookmarkMenuDialog } from "./bookmark-dialog";
 import type { Bookmark } from "@/types/bookmark";
-import { EllipsisVertical, Pin } from "lucide-react";
+import { EllipsisVertical, Pin, Eye, Clock, Calendar } from "lucide-react";
 import Image from "next/image";
 
 interface BookmarkCardProps {
@@ -18,6 +19,21 @@ interface BookmarkCardProps {
 export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
   const url = new URL(bookmark.url).hostname;
   const imageSrc = bookmark.favicon_url;
+
+  const formattedDate = new Date(bookmark.created_at).toLocaleDateString(
+    "en-GB",
+    { day: "numeric", month: "short" }
+  );
+
+  const bookmarkInfo = [
+    { label: "Visits", value: bookmark.visit_count, icon: Eye },
+    { label: "Created", value: formattedDate, icon: Calendar },
+    {
+      label: "Last Visited",
+      value: bookmark.last_visited ? bookmark.last_visited : "Never",
+      icon: Clock,
+    },
+  ];
 
   return (
     <Card>
@@ -38,17 +54,17 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
           </CardDescription>
         </div>
 
-        <div className="rounded-[6px] p-1.5 outline-2 outline-neutral-400 dark:outline-(--neutral-500)">
-          <EllipsisVertical />
-        </div>
+            <div className="group rounded-[6px] outline-2 outline-neutral-400 dark:outline-(--neutral-500) hover:bg-neutral-100 dark:hover:bg-(--neutral-600) focus:bg-neutral-100 dark:focus:bg-(--neutral-700)">
+             <BookmarkMenuDialog bookmark={bookmark} />
+            </div>
         {/* <CardAction>Card Action</CardAction> */}
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-4 min-h-[170px]">
         <p className="text-neutral-800 dark:text-neutral-100">
           {bookmark.description}
         </p>
-        <div className="flex flex-wrap gap-x-1.5 gap-y-[1px]">
+        <div className="flex flex-wrap gap-x-1.5 gap-y-px mt-auto">
           {bookmark.bookmark_tags.map((item) => (
             <span
               key={item.tags.id}
@@ -60,11 +76,18 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="mt-auto">
-        <div aria-label="bookmark info" className="flex flex-1 text-neutral-800 dark:text-neutral-100 gap-4">
-          <p>{bookmark.visit_count}</p>
-          <p>{bookmark.created_at}</p>
-          <p>{bookmark.last_visited ? bookmark.last_visited : "Never"}</p>
+      <CardFooter className="mt-auto border-t border-neutral-300 dark:border-nuetral-500">
+        <div aria-label="bookmark info" className="flex flex-1 gap-4">
+          {bookmarkInfo.map((info) => (
+            <div
+              key={info.label}
+              aria-label={info.label}
+              className="items-center font-medium text-set5 text-neutral-800 dark:text-neutral-100 flex gap-1.5"
+            >
+              <info.icon className="size-4" />
+              <span className="text-set5 ">{info.value}</span>
+            </div>
+          ))}
         </div>
 
         {bookmark.is_pinned && (

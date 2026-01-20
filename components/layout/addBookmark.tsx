@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { useForm, useWatch, Controller } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
-import {useCreateBookmark} from "@/hooks/useBookmark";
+import { useCreateBookmark } from "@/hooks/useBookmark";
 import type { BookmarkFormData, Tag } from "@/types/bookmark-data";
 import { Plus } from "lucide-react";
-
+import { toast } from "sonner";
 
 export default function AddBookmark() {
   const {
@@ -31,7 +31,7 @@ export default function AddBookmark() {
     shouldUnregister: true,
   });
 
-  const {mutateAsync} = useCreateBookmark();
+  const { mutateAsync } = useCreateBookmark();
 
   const descriptionValue = useWatch({
     control,
@@ -40,22 +40,23 @@ export default function AddBookmark() {
   });
 
   const TAGS: Tag[] = [
-    {tag: "AI", id: 1},
-    {tag: "Community", id: 2},
-    {tag: "CSS", id: 3},
-    {tag: "Design", id: 4},
-    {tag: "Framework", id: 5},
-    {tag: "Git", id: 6},
-    {tag: "HTML", id: 7},
-    {tag: "JavaScript", id: 8},
-    {tag: "Learning", id: 9},
-    {tag: "Layout", id: 10},
-    {tag: "Performance", id: 11},
-    {tag: "Practice", id: 12},
-    {tag: "Reference", id: 13},
-    {tag: "Tips", id: 14},
-    {tag: "Tools", id: 15},
-    {tag: "Tutorial", id: 16},
+    { tag: "AI", id: 1 },
+    { tag: "Community", id: 2 },
+    { tag: "Compatibility", id: 3 },
+    { tag: "CSS", id: 4 },
+    { tag: "Design", id: 5 },
+    { tag: "Framework", id: 6 },
+    { tag: "Git", id: 7 },
+    { tag: "HTML", id: 8 },
+    { tag: "JavaScript", id: 9 },
+    { tag: "Layout", id: 10 },
+    { tag: "Learning", id: 11 },
+    { tag: "Performance", id: 12 },
+    { tag: "Practice", id: 13 },
+    { tag: "Reference", id: 14 },
+    { tag: "Tips", id: 15 },
+    { tag: "Tools", id: 16 },
+    { tag: "Tutorial", id: 17 },
   ];
 
   const [open, setOpen] = useState(false);
@@ -79,14 +80,17 @@ export default function AddBookmark() {
     try {
       await mutateAsync(data);
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Error adding bookmark:", error);
+      toast.success("Bookmark added successfully")
+    } catch (err ) {
+      const message = err instanceof Error ? err.message : "something went wrong";
+
+      toast.error("Error adding bookmark", {
+        duration: 3000,
+        description: message ,
+      });
+      console.log(err)
     }
-
-
   };
-
-
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -122,10 +126,7 @@ export default function AddBookmark() {
           onSubmit={handleSubmit(onSubmit)}
           className="mt-4 flex flex-col gap-6"
         >
-          <div
-            aria-label="Add bookmark form"
-            className="flex flex-col gap-2.5"
-          >
+          <div aria-label="Add bookmark form" className="flex flex-col gap-2.5">
             <div>
               <label
                 htmlFor="title"
@@ -345,7 +346,9 @@ export default function AddBookmark() {
                           )}
 
                           {filteredTags.map((tags) => {
-                            const selected = field.value?.map((t) => t.tag).includes(tags.tag);
+                            const selected = field.value
+                              ?.map((t) => t.tag)
+                              .includes(tags.tag);
 
                             return (
                               <button
@@ -354,7 +357,9 @@ export default function AddBookmark() {
                                 onClick={() => {
                                   field.onChange(
                                     selected
-                                      ? field.value?.filter((t) => t.tag !== tags.tag)
+                                      ? field.value?.filter(
+                                          (t) => t.tag !== tags.tag
+                                        )
                                       : [...field.value, tags]
                                   );
                                   setSearch("");

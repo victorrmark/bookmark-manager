@@ -18,6 +18,8 @@
   --neutral-dark-400: #004746;
   --neutral-dark-300: #00706e;
   --neutral-dark-100: #b1b9b9;
+  --toast-bg: #ffffff;
+  --toast-text: #051513;
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -67,6 +69,8 @@
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: var(--neutral-dark-500);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --toast-bg: #004241;
+  --toast-text: #ffffff;
 }
 
 @theme inline {
@@ -210,4 +214,5 @@ body {
   dark:hover:bg-teal-700
 
 }
+
 
