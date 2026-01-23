@@ -20,17 +20,21 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
   const url = new URL(bookmark.url).hostname;
   const imageSrc = bookmark.favicon_url;
 
-  const formattedDate = new Date(bookmark.created_at).toLocaleDateString(
-    "en-GB",
-    { day: "numeric", month: "short" }
-  );
+  const formattedDate = (date: string) => {
+
+    return new Date(date).toLocaleDateString(
+      "en-GB",
+      { day: "numeric", month: "short" }
+    );
+  }
+
 
   const bookmarkInfo = [
     { label: "Visits", value: bookmark.visit_count, icon: Eye },
-    { label: "Created", value: formattedDate, icon: Calendar },
+    { label: "Created", value: formattedDate(bookmark.created_at), icon: Calendar },
     {
       label: "Last Visited",
-      value: bookmark.last_visited ? bookmark.last_visited : "Never",
+      value: bookmark.last_visited ? formattedDate(bookmark.last_visited) : "Never",
       icon: Clock,
     },
   ];
@@ -54,9 +58,9 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
           </CardDescription>
         </div>
 
-            <div className="group rounded-[6px] outline-2 outline-neutral-400 dark:outline-(--neutral-500) hover:bg-neutral-100 dark:hover:bg-(--neutral-600) focus:bg-neutral-100 dark:focus:bg-(--neutral-700)">
-             <BookmarkMenuDialog bookmark={bookmark} />
-            </div>
+        <div className="group rounded-[6px] outline-2 outline-neutral-400 dark:outline-(--neutral-500) hover:bg-neutral-100 dark:hover:bg-(--neutral-600) focus:bg-neutral-100 dark:focus:bg-(--neutral-700)">
+          <BookmarkMenuDialog bookmark={bookmark} />
+        </div>
         {/* <CardAction>Card Action</CardAction> */}
       </CardHeader>
 

@@ -36,6 +36,9 @@ export default function RootLayout({
             position="top-right"
             toastOptions={{
               duration: 3000,
+              classNames: {
+                description: "var(--toast-text)",
+              },
               style: {
                 background: "var(--toast-bg)",
                 color: "var(--toast-text)",

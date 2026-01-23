@@ -23,14 +23,12 @@ export default function LoginPage() {
     const res = await loginAction(data);
     if (res?.error) {
       if (res.error.includes("fetch failed")){
-        toast.error("Login failed", {
-          description: "Please check your internet connection and try again.",
+        toast.error("Login failed. Check your internet connection", {
           duration: 4000,
           position: "top-right",
         });
       }else{
-        toast.error("Login failed", {
-          description: res.error,
+        toast.error(res.error, {
           duration: 4000,
           position: "top-right",
         });

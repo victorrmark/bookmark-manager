@@ -1,10 +1,17 @@
-export default function ArchivedPage() {
-  return (
-    <div className="flex h-screen items-center justify-center  font-sans ">
+'use client'
+import BookmarkCard from "@/components/layout/bookmarks-card";
+import { useArchives } from "@/hooks/useBookmark";
 
-        <p className="text-2xl text-white dark:text-neutral-300">
-          This is the Archived Page!
-        </p>
-    </div>
+
+export default function Archived() {
+  const { data: bookmarks } = useArchives();
+  console.log("Bookmarks Data:", bookmarks);
+
+  return (
+    <>
+      {bookmarks?.map((bookmark) => (
+        <BookmarkCard key={bookmark.id} bookmark={bookmark} />
+      ))}
+    </>
   );
 }
