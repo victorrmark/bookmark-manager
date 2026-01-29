@@ -37,6 +37,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import EditBookmarkForm from "./editBookmark-form";
 import Link from "next/link";
 
 interface BookmarkCardProps {
@@ -44,7 +45,7 @@ interface BookmarkCardProps {
 }
 
 export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
-  const [showEditDialog, setEditDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [showArchiveDialog, setShowArchiveDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [archiveId, setArchiveId] = useState<string>("");
@@ -55,7 +56,7 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
     useArchiveBookmark();
   const { mutateAsync: mutateDeleteAsync, isPending: isDeleting } =
     useDeleteBookmark();
-  const {mutateAsync: mutateMarkVisitedAsync} = useMarkVisitedBookmark();
+  const { mutateAsync: mutateMarkVisitedAsync } = useMarkVisitedBookmark();
 
   const isArchived = bookmark.is_archived;
   const isPinned = bookmark.is_pinned;
@@ -81,7 +82,7 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
         duration: 3000,
         description: message,
       });
-      console.log(err);
+      throw err;
     }
   };
 
@@ -187,7 +188,7 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
             {!isArchived && (
               <DropdownMenuItem
                 className={dialogClass}
-                onSelect={() => setEditDialog(true)}
+                onSelect={() => setShowEditDialog(true)}
               >
                 <SquarePen className={iconClass} />
                 Edit
@@ -225,13 +226,15 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Dialog open={showEditDialog} onOpenChange={setEditDialog}>
+
+      {/* Dialog Box for editing bookmarks */}
+      <EditBookmarkForm dialogOpen={showEditDialog} setDialogOpen={setShowEditDialog} bookmark={bookmark} />
+      {/* <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit Bookmark</DialogTitle>
-            <DialogDescription>
-              Provide a name for your new file. Click create when you&apos;re
-              done.
+            <DialogDescription className="text-set-4 font-medium text-neutral-800 dark:text-neutral-100">
+              Update your saved link details — change the title, description, URL, or tags anytime.
             </DialogDescription>
           </DialogHeader>
 
@@ -242,8 +245,10 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
             <Button type="submit">Create</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
+
+      {/* Dialog Box for archiving and Unarchiving bookmarks */}
       <Dialog open={showArchiveDialog} onOpenChange={setShowArchiveDialog}>
         <DialogContent className="sm:max-w-[450px] gap-6">
           <DialogHeader>
@@ -276,6 +281,7 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
         </DialogContent>
       </Dialog>
 
+      {/* Dialog Box for Deleting bookmarks */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent className="sm:max-w-[450px] gap-6">
           <DialogHeader>

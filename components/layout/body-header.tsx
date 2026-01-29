@@ -2,21 +2,19 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
 import { ArrowDownUp } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
 
-// type FilterType = "Recently added" | "Recently visited" | "Most visited"
 
 export default function BodyHeader() {
-  const [sortBy, setSortBy] = useState("Recently added");
+  const { sortBy, setSortBy } = useBookmarkContext();
   const pathname = usePathname();
+
 
   return (
     <DropdownMenu>
@@ -36,23 +34,20 @@ export default function BodyHeader() {
       <DropdownMenuContent className="w-49 right-[-50] top-2 border border-neutral-100 dark:border-(--neutral-500) bg-white dark:bg-(--neutral-600) text-neutral-800 dark:text-neutral-100 p-2 gap-1 rounded-xl ">
         <DropdownMenuRadioGroup value={sortBy} onValueChange={setSortBy}>
           <DropdownMenuRadioItem
-            value="Recently added"
-            onClick={() => console.log("Recently added")}
+            value="recent"
             className="sort-items"
           >
             Recently added
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
-            value="Recently visited"
+            value="lastVisited"
             className="sort-items"
-            onClick={() => console.log("Recently visited")}
           >
             Recently visited
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
-            value="Most visited"
+            value="mostVisited"
             className="sort-items"
-            onClick={() => console.log("Most visited")}
           >
             Most visited
           </DropdownMenuRadioItem>

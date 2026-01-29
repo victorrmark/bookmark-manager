@@ -1,9 +1,13 @@
+'use client';
+
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Search, Plus } from "lucide-react";
 import { UserAvatar } from "./avatar";
 import AddBookmark from "./addBookmark";
+import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
 
 export default function Header() {
+  const { setSearchQuery } = useBookmarkContext();
   return (
     <header
      /*fixed top-0 right-0 z-50 lg:w-[calc(100%-18.5rem)] lg:left-[18.5rem] */ 
@@ -33,6 +37,7 @@ export default function Header() {
               focus:ring-teal-700 dark:ring-neutral-100
               ring-offset-white dark:ring-offset-neutral-800 ring-offset-2
             "
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
