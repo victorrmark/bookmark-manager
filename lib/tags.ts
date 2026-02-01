@@ -1,0 +1,18 @@
+  export const tagsArray = [
+    { id: 1, tag: "AI", },
+    { id: 2, tag: "Community", },
+    { id: 3, tag: "CSS", },
+    { id: 4, tag: "Design", },
+    { id: 5, tag: "Framework", },
+    { id: 6, tag: "Git", },
+    { id: 7, tag: "HTML", },
+    { id: 8, tag: "JavaScript", },
+    { id: 9, tag: "Layout", },
+    { id: 10, tag: "Learning", },
+    { id: 11, tag: "Performance", },
+    { id: 12, tag: "Practice", },
+    { id: 13, tag: "Reference", },
+    { id: 14, tag: "Tips", },
+    { id: 15, tag: "Tools", },
+    { id: 16, tag: "Tutorials", },
+  ];

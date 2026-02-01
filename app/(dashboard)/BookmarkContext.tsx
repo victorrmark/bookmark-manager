@@ -6,17 +6,22 @@ import { createContext, useContext, useState } from "react";
 interface BookmarkContextType {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
-    selectedId: number[];
-    setSelectedId: (ids: number[]) => void;
+    selectedId: SelectIDType[];
+    setSelectedId: ({ids}: SelectIDType[]) => void;
     sortBy: string;
     setSortBy: (sortBy: string) => void;
+}
+
+interface SelectIDType {
+    id: number;
+    tag: string;
 }
 
 const BookmarkContext = createContext<BookmarkContextType | undefined>(undefined);
 
 export function BookmarkProvider({ children }: { children: React.ReactNode }) {
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedId, setSelectedId] = useState<number[]>([]);
+    const [selectedId, setSelectedId] = useState<SelectIDType[]>([]);
     const [sortBy, setSortBy] = useState<string>("recent");
 
     return (

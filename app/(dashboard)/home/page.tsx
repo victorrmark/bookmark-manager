@@ -9,11 +9,8 @@ export default function Home() {
   const { data: bookmarks = [] } = useBookmark();
   const { selectedId, searchQuery, sortBy } = useBookmarkContext();
 
-  // console.log("Bookmarks Data:", bookmarks);
   const visibleBookmarks = useMemo(() => {
     let result = bookmarks;
-
-
 
     if (searchQuery) {
       result = result?.filter((bookmark) =>
@@ -25,14 +22,15 @@ export default function Home() {
     const pinned = result?.filter((bookmark) => bookmark.is_pinned);
     const unpinned = result?.filter((bookmark) => !bookmark.is_pinned);
 
-    return [...pinned!, ...unpinned!]
-
     unpinned.sort((a, b) => {
       if (sortBy === "recent") {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       }
       if (sortBy === "lastVisited") {
-        return new Date(b.last_visited).getTime() - new Date(a.last_visited).getTime();
+        const timeA = a.last_visited ? new Date(a.last_visited).getTime() : 0;
+        const timeB = b.last_visited ? new Date(b.last_visited).getTime() : 0;
+
+        return timeB - timeA;
       }
       if (sortBy === "mostVisited") {
         return b.visit_count - a.visit_count;
@@ -40,6 +38,8 @@ export default function Home() {
       return 0;
 
     })
+    return [...pinned!, ...unpinned!]
+
 
 
   }, [bookmarks, selectedId, searchQuery, sortBy]);
