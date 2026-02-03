@@ -4,7 +4,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useBookmark, useArchives } from "@/hooks/useBookmark";
 import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
-import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { tagsArray } from "@/lib/tags";
 
@@ -48,14 +47,9 @@ export function TagsCheckbox() {
   };
 
   const checked = (id: number) => {
-    return selectedId.map((selected) => selected.id).includes(id);
+    return selectedId.some((selected) => selected.id === id);
   }
 
-
-
-  useEffect(() => {
-    console.log("Selected IDs:", selectedId);
-  }, [selectedId]);
 
   return (
     <>
