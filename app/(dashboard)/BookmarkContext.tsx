@@ -1,13 +1,12 @@
 'use client';
 import { createContext, useContext, useState } from "react";
 
-// type SortBy = "recent" | "lastVisited" | "mostVisited";
 
 interface BookmarkContextType {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     selectedId: SelectIDType[];
-    setSelectedId: ({ids}: SelectIDType[]) => void;
+    setSelectedId: ({id}: SelectIDType[]) => void;
     sortBy: string;
     setSortBy: (sortBy: string) => void;
 }
