@@ -1,4 +1,5 @@
 "use client";
+import { supabase } from "@/lib/supabase"
 import { Separator } from "@/components/ui/separator";
 import {
   Popover,
@@ -9,10 +10,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, Palette, CircleUserRound } from "lucide-react";
 import { logoutAction } from "@/app/actions/authActions";
+import { useProfile } from "@/hooks/useProfile"
 import { ThemeToggle } from "@/components/layout/themeToggle";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChangeAvatar from "./change-avatar";
+import { UserMetadata } from "@supabase/supabase-js"
+import { AVATARS } from '@/lib/avatar';
+
+
 
 export function UserAvatar() {
   const {
@@ -20,28 +26,44 @@ export function UserAvatar() {
     formState: { isSubmitting },
   } = useForm();
   const [openDialog, setOpenDialog] = useState(false);
+  const [user, setUser] = useState<UserMetadata | null>(null);
+  const { data: profile, } = useProfile()
+
+  const avatarURL = AVATARS.find(avatar => avatar.id === profile?.avatar_id)?.src
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser()
+      const user = data.user?.user_metadata || null
+      setUser(user)
+
+    }
+
+    getUser()
+  }, []);
+
 
   return (
     <>
       <Popover>
         <PopoverTrigger className="rounded-full focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 cursor-pointer ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 focus:outline-none data-[state=open]:ring-2 data-[state=open]:ring-teal-700 dark:data-[state=open]:ring-neutral-100">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={avatarURL} alt="User Avatar" />
+            <AvatarFallback>{user?.display_name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="border-neutral-100 bg-white dark:bg-(--neutral-600) dark:border-neutral-500 shadow-md ">
           <div className="flex px-4 py-3 items-center gap-3">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={avatarURL} alt="User Avatar" />
+              <AvatarFallback>{user?.display_name?.charAt(0) || "U"}</AvatarFallback>
             </Avatar>
             <div>
               <p className="text-set4 font-semibold text-neutral-900 dark:text-white">
-                Emily Carter
+                {user?.display_name || "User"}
               </p>
               <p className="text-set4 font-medium text-neutral-800 dark:text-neutral-100">
-                emily101@example.com
+                {user?.email}
               </p>
             </div>
           </div>
@@ -91,8 +113,8 @@ export function UserAvatar() {
           </Button>
         </PopoverContent>
       </Popover>
-      
-      <ChangeAvatar open={openDialog} setOpen={setOpenDialog} />
+
+      <ChangeAvatar open={openDialog} setOpen={setOpenDialog} userId={user?.sub} />
     </>
 
   );

@@ -16,21 +16,39 @@ import {
 import { Button } from '../ui/button';
 import { AVATARS } from '@/lib/avatar';
 import { useState } from 'react';
+import { useUpdateAvatar } from "@/hooks/useUpdateAvatar"
+import { toast } from 'sonner';
 
 interface ChangeAvatarProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    userId: string;
 }
 
-export default function ChangeAvatar({ open, setOpen }: ChangeAvatarProps) {
+export default function ChangeAvatar({ open, setOpen, userId }: ChangeAvatarProps) {
     const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+    const updateAvatar = useUpdateAvatar()
+
     const handleAvatarSelect = (avatarID: string) => {
-        console.log("Selected avatar URL:", avatarID);
-        setOpen(false);
+        setSelectedAvatar(avatarID);
     }
+
+    const handleAvatarChange = async () => {
+        if (!selectedAvatar) return;
+        try {
+
+            await updateAvatar(selectedAvatar, userId);
+            setOpen(false);
+            toast.success("Avatar updated successfully!");
+        } catch (error) {
+            console.error("Failed to update avatar:", error);
+            toast.error("Failed to update avatar. Please try again.");
+        }
+    }
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-[450px] gap-6">
+            <DialogContent className="sm:max-w-[450px] gap-8">
                 <DialogHeader>
                     <DialogTitle className="text-set1 text-neutral-900 dark:text-white">
                         Change avatar
@@ -40,29 +58,32 @@ export default function ChangeAvatar({ open, setOpen }: ChangeAvatarProps) {
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className='w-full flex gap-3'>
-                    {AVATARS.map((avatarUrl, index) => (
-                        <Avatar key={index} className='size-16 cursor-pointer hover:ring-2 hover:ring-teal-700 dark:hover:ring-neutral-100 ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 rounded-full'>
-                            <AvatarImage src={avatarUrl.src} alt={avatarUrl.id} />
+                <div className='w-full flex gap-5 flex-wrap justify-center'>
+                    {AVATARS.map((avatar, index) => (
+                        <Avatar
+                            key={index}
+                            className={`${selectedAvatar === avatar.id ? "ring-2 ring-teal-700 dark:ring-neutral-100" : ""} size-24 cursor-pointer ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 rounded-full`}
+                            onClick={() => handleAvatarSelect(avatar.id)}
+                        >
+                            <AvatarImage src={avatar.src} alt={avatar.id} />
                         </Avatar>
                     ))}
-                    </div>
+                </div>
 
                 <DialogFooter className="flex sm:items-center sm:justify-end gap-8">
-                    {/* <DialogClose
+                    <DialogClose
                         asChild
                         className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl border border-neutral-400 dark:border-neutral-400 cursor-pointer hover:text-teal-700 dark:hover:text-neutral-100"
-                    > */}
-                    {/* <Button disabled={isDeleting}>Cancel</Button>
+                    >
+                        <Button >Cancel</Button>
                     </DialogClose>
                     <Button
-                        onClick={() => deleteBookmark(deleteId)}
+                        onClick={handleAvatarChange}
                         type="submit"
-                        disabled={isDeleting}
                         className=" text-set3 flex-1 sm:flex-initial px-5 py-2.5 bg-red-800 hover:bg-red-900 cursor-pointer text-white"
                     >
-                        {isDeleting ? "Deleting..." : "Delete permanently"}
-                    </Button> */}
+                        Change Avatar
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
