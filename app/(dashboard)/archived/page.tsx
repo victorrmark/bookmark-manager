@@ -4,10 +4,11 @@ import { useArchives } from "@/hooks/useBookmark";
 import { useMemo } from "react";
 import { useBookmarkContext } from "../BookmarkContext";
 import EmptyState from "@/app/(dashboard)/emptyState";
+import { SkeletonCard } from "@/components/layout/skeleton";
 
 
 export default function Archived() {
-  const { data: bookmarks = [] } = useArchives();
+  const { data: bookmarks = [], isLoading } = useArchives();
 
   const { selectedId, searchQuery, sortBy } = useBookmarkContext();
 
@@ -65,6 +66,7 @@ export default function Archived() {
 
   return (
     <>
+      {isLoading ? <SkeletonCard /> : null}
       <EmptyState bookmarks={bookmarks} visibleBookmarks={visibleBookmarks.length === 0} />
       {visibleBookmarks?.map((bookmark) => (
         <BookmarkCard key={bookmark.id} bookmark={bookmark} />
