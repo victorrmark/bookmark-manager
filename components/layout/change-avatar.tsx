@@ -1,4 +1,3 @@
-import React from 'react'
 
 import {
     Dialog,
@@ -80,7 +79,8 @@ export default function ChangeAvatar({ open, setOpen, userId }: ChangeAvatarProp
                     <Button
                         onClick={handleAvatarChange}
                         type="submit"
-                        className=" text-set3 flex-1 sm:flex-initial px-5 py-2.5 bg-red-800 hover:bg-red-900 cursor-pointer text-white"
+                        disabled={!selectedAvatar}
+                        className=" text-set3 flex-1 sm:flex-initial px-5 py-2.5 bg-teal-700 hover:bg-teal-800 cursor-pointer text-white"
                     >
                         Change Avatar
                     </Button>

@@ -3,12 +3,12 @@ import BookmarkCard from "@/components/layout/bookmarks-card";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useMemo } from "react";
 import { useBookmarkContext } from "../BookmarkContext";
+import EmptyState from "@/app/(dashboard)/emptyState";
 
 
 export default function Home() {
   const { data: bookmarks = [] } = useBookmark();
   const { selectedId, searchQuery, sortBy } = useBookmarkContext();
-  console.log(bookmarks)
 
   const visibleBookmarks = useMemo(() => {
     let result = bookmarks;
@@ -64,6 +64,7 @@ export default function Home() {
 
   return (
     <>
+      <EmptyState bookmarks={bookmarks} visibleBookmarks={visibleBookmarks.length === 0} />
       {visibleBookmarks?.map((bookmark) => (
         <BookmarkCard key={bookmark.id} bookmark={bookmark} />
       ))}
