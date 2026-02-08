@@ -74,11 +74,11 @@ export default function EditBookmarkForm({ dialogOpen, setDialogOpen, bookmark }
 
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
         setSearch("");
       }
@@ -353,7 +353,7 @@ export default function EditBookmarkForm({ dialogOpen, setDialogOpen, bookmark }
                                       ? field.value?.filter(
                                         (t) => t.tag !== tags.tag
                                       )
-                                      : [...field.value, tags]
+                                      : [...(field.value ?? []), tags]
                                   );
                                   setSearch("");
                                 }}
