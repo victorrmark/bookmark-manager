@@ -360,7 +360,7 @@ export default function AddBookmark() {
                                       ? field.value?.filter(
                                           (t) => t.tag !== tags.tag
                                         )
-                                      : [...field.value, tags]
+                                      : [...(field.value ?? []), tags]
                                   );
                                   setSearch("");
                                 }}
