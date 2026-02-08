@@ -11,6 +11,8 @@ export default function Home() {
   const { data: bookmarks = [], isLoading } = useBookmark();
   const { selectedId, searchQuery, sortBy } = useBookmarkContext();
 
+  console.log(bookmarks);
+
   const visibleBookmarks = useMemo(() => {
     let result = bookmarks;
 

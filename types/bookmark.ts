@@ -10,7 +10,7 @@ export interface Bookmark {
       tags: {
         tag: string;
         id: number;
-      }[];
+      };
     }[];
     is_archived: boolean;
     is_pinned: boolean;
