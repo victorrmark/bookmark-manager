@@ -1,5 +1,4 @@
-// import { logoutAction } from "@/app/actions/authActions";
-// import { ModeToggle } from "@/components/layout/modeToggle";
+
 import { redirect } from "next/navigation";
 
 

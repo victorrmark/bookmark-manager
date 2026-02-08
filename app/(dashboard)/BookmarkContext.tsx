@@ -4,11 +4,11 @@ import { createContext, useContext, useState } from "react";
 
 interface BookmarkContextType {
     searchQuery: string;
-    setSearchQuery: (query: string) => void;
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
     selectedId: SelectIDType[];
-    setSelectedId: ({id}: SelectIDType[]) => void;
+    setSelectedId: React.Dispatch<React.SetStateAction<SelectIDType[]>>;
     sortBy: string;
-    setSortBy: (sortBy: string) => void;
+    setSortBy: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface SelectIDType {
