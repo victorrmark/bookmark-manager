@@ -265,8 +265,7 @@ function SidebarTrigger({
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
-      variant="ghost"
-      size="icon"
+      // size="icon"
       className={cn("size-7 lg:hidden ", className)}
       onClick={(event) => {
         onClick?.(event)
@@ -609,9 +608,7 @@ function SidebarMenuSkeleton({
   showIcon?: boolean
 }) {
   // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
-  }, [])
+  const [width] = React.useState(() => `${Math.floor(Math.random() * 40) + 50}%`);
 
   return (
     <div
