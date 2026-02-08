@@ -4,7 +4,6 @@ import {
   CircleCheckIcon,
   InfoIcon,
   Loader2Icon,
-  Copy,
   OctagonXIcon,
   TriangleAlertIcon,
 } from "lucide-react";
@@ -20,7 +19,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       icons={{
         success: <CircleCheckIcon className="text-teal-700 dark:text-white size-4" />,
-        copied: <Copy className="text-teal-700 dark:text-white size-4" />,
         info: <InfoIcon className="text-teal-700 dark:text-white size-4" />,
         warning: <TriangleAlertIcon className="text-teal-700 dark:text-white size-4" />,
         error: <OctagonXIcon className="text-teal-700 dark:text-white size-4" />,
