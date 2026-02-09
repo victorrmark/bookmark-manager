@@ -8,9 +8,9 @@ interface EditBookmarkData extends BookmarkFormData {
   bookmark_id: string
 }
 
-export function useBookmark() {
+export function useBookmark(userId: string | undefined) {
   return useQuery<Bookmark[]>({
-    queryKey: ["bookmark", "active"],
+    queryKey: ["bookmark", "active", userId],
     queryFn: async () => {
       const response = await fetch(`/api/bookmarks/get`);
       if (!response.ok) {
@@ -19,6 +19,7 @@ export function useBookmark() {
       return response.json();
     },
     staleTime: 1000 * 60 * 5,
+    enabled: !!userId,
   });
 }
 

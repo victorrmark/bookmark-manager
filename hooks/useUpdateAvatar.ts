@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase"
 export function useUpdateAvatar() {
   const queryClient = useQueryClient()
 
-  const updateAvatar = async (avatarId: string, userId: string) => {
+  const updateAvatar = async (avatarId: string, userId: string | undefined) => {
     const { error } = await supabase
       .from("profiles")
       .update({ avatar_id: avatarId })

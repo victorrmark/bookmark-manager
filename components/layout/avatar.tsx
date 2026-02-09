@@ -17,30 +17,20 @@ import { useState, useEffect } from "react";
 import ChangeAvatar from "./change-avatar";
 import { UserMetadata } from "@supabase/supabase-js"
 import { AVATARS } from '@/lib/avatar';
+import {useUserContext} from "@/app/(dashboard)/UserContext";
 
 
 
 export function UserAvatar() {
+  const { user } = useUserContext()
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
   const [openDialog, setOpenDialog] = useState(false);
-  const [user, setUser] = useState<UserMetadata | null>(null);
   const { data: profile, } = useProfile()
 
   const avatarURL = AVATARS.find(avatar => avatar.id === profile?.avatar_id)?.src
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser()
-      const user = data.user?.user_metadata || null
-      setUser(user)
-
-    }
-
-    getUser()
-  }, []);
 
 
   return (
@@ -49,18 +39,18 @@ export function UserAvatar() {
         <PopoverTrigger className="rounded-full focus:ring-2 focus:ring-teal-700 dark:ring-neutral-100 cursor-pointer ring-offset-white dark:ring-offset-(--neutral-800) ring-offset-2 focus:outline-none data-[state=open]:ring-2 data-[state=open]:ring-teal-700 dark:data-[state=open]:ring-neutral-100">
           <Avatar>
             <AvatarImage src={avatarURL} alt="User Avatar" />
-            <AvatarFallback>{user?.display_name?.charAt(0) || "U"}</AvatarFallback>
+            <AvatarFallback>{user?.user_metadata?.display_name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="border-neutral-100 bg-white dark:bg-(--neutral-600) dark:border-neutral-500 shadow-md ">
           <div className="flex px-4 py-3 items-center gap-3">
             <Avatar>
               <AvatarImage src={avatarURL} alt="User Avatar" />
-              <AvatarFallback>{user?.display_name?.charAt(0) || "U"}</AvatarFallback>
+              <AvatarFallback>{user?.user_metadata?.display_name?.charAt(0) || "U"}</AvatarFallback>
             </Avatar>
             <div>
               <p className="text-set4 font-semibold text-neutral-900 dark:text-white">
-                {user?.display_name || "User"}
+                {user?.user_metadata?.display_name || "User"}
               </p>
               <p className="text-set4 font-medium text-neutral-800 dark:text-neutral-100">
                 {user?.email}
@@ -114,7 +104,7 @@ export function UserAvatar() {
         </PopoverContent>
       </Popover>
 
-      <ChangeAvatar open={openDialog} setOpen={setOpenDialog} userId={user?.sub} />
+      <ChangeAvatar open={openDialog} setOpen={setOpenDialog} userId={user?.id} />
     </>
 
   );
