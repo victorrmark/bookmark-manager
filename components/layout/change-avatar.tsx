@@ -21,7 +21,7 @@ import { toast } from 'sonner';
 interface ChangeAvatarProps {
     open: boolean;
     setOpen: (open: boolean) => void;
-    userId: string;
+    userId: string | undefined;
 }
 
 export default function ChangeAvatar({ open, setOpen, userId }: ChangeAvatarProps) {

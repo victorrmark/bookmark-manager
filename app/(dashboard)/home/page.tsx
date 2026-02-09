@@ -5,14 +5,12 @@ import { useMemo } from "react";
 import { useBookmarkContext } from "../BookmarkContext";
 import EmptyState from "@/app/(dashboard)/emptyState";
 import { SkeletonCard } from "@/components/layout/skeleton";
-
+import { useUserContext } from "../UserContext";
 
 export default function Home() {
-  const { data: bookmarks = [], isLoading } = useBookmark();
+  const { user } = useUserContext();
+  const { data: bookmarks = [], isLoading } = useBookmark(user?.id);
   const { selectedId, searchQuery, sortBy } = useBookmarkContext();
-
-  console.log(bookmarks);
-
   const visibleBookmarks = useMemo(() => {
     let result = bookmarks;
 

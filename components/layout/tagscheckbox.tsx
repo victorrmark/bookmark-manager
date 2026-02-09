@@ -6,6 +6,7 @@ import { useBookmark, useArchives } from "@/hooks/useBookmark";
 import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
 import { usePathname } from "next/navigation";
 import { tagsArray } from "@/lib/tags";
+import { useUserContext } from "@/app/(dashboard)/UserContext";
 
 interface FilterType {
   id: number;
@@ -18,9 +19,10 @@ interface FilterType {
 export function TagsCheckbox() {
 
   const pathname = usePathname();
+  const { user } = useUserContext();
   const { selectedId, setSelectedId } = useBookmarkContext();
-  const { data: bookmarks = [] } = useBookmark();
-  const { data: archives = [] } = useArchives();
+  const { data: bookmarks = [] } = useBookmark(user?.id);
+  const { data: archives = [] } = useArchives(user?.id);
 
   const activeBookmarks = pathname === "/home" ? bookmarks : archives;
 

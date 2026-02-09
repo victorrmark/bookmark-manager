@@ -52,8 +52,8 @@ export async function signupAction(formData: RegisterType) {
     return { error: error.message };
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  // revalidatePath("/", "layout");
+  // redirect("/");
 }
 
 export async function logoutAction() {
@@ -61,12 +61,8 @@ export async function logoutAction() {
 
   const { error } = await supabase.auth.signOut();
   if (error) {
-    toast.error("Logout failed", {
-      description: error.message,
-      duration: 4000,
-      position: "top-right",
-    });
-
+    return { error: error.message };
   }
+  
   redirect("/login");
 }
