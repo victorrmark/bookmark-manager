@@ -89,7 +89,7 @@ export default function SignUpPage() {
                 htmlFor="name"
                 className="block text-set4 font-bold text-neutral-900 dark:text-white"
               >
-                Full name *
+                Full name <span className="text-teal-700 dark:text-neutral-100">*</span>
                 <input
                   type="text"
                   id="name"
@@ -117,7 +117,7 @@ export default function SignUpPage() {
                 htmlFor="email"
                 className="block text-set4 font-bold text-neutral-900 dark:text-white "
               >
-                Email address *
+                Email address <span className="text-teal-700 dark:text-neutral-100">*</span>
                 <input
                   type="text"
                   id="email"
@@ -149,7 +149,7 @@ export default function SignUpPage() {
                 htmlFor="password"
                 className="block text-set4 font-bold text-neutral-900 dark:text-white "
               >
-                Password *
+                Password <span className="text-teal-700 dark:text-neutral-100">*</span>
                 <input
                   type="password"
                   id="password"

@@ -73,7 +73,7 @@ export default function LoginPage() {
               htmlFor="email"
               className="block text-set4 font-bold text-neutral-900 dark:text-white"
             >
-              Email
+              Email <span className="text-teal-700 dark:text-neutral-100">*</span>
               <input
                 type="text"
                 id="email"
@@ -102,7 +102,7 @@ export default function LoginPage() {
               htmlFor="password"
               className="block text-set4 font-bold text-neutral-900 dark:text-white "
             >
-              Password
+              Password <span className="text-teal-700 dark:text-neutral-100">*</span>
               <input
                 type="password"
                 id="password"

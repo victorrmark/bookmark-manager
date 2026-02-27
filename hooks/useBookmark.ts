@@ -23,9 +23,9 @@ export function useBookmark(userId: string | undefined) {
   });
 }
 
-export function useArchives() {
+export function useArchives(userId: string | undefined) {
   return useQuery<Bookmark[]>({
-    queryKey: ["bookmark", "archived"],
+    queryKey: ["bookmark", "archived", userId],
     queryFn: async () => {
       const response = await fetch(`/api/archives`);
       if (!response.ok) {
@@ -34,6 +34,7 @@ export function useArchives() {
       return response.json();
     },
     staleTime: 1000 * 60 * 5,
+    enabled: !!userId,
   });
 }
 
