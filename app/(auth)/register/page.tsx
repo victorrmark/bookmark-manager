@@ -89,7 +89,7 @@ export default function SignUpPage() {
                 htmlFor="name"
                 className="block text-set4 font-bold text-neutral-900 dark:text-white"
               >
-                Full name *
+                Full name <span className="text-teal-700 dark:text-neutral-100">*</span>
                 <input
                   type="text"
                   id="name"
@@ -122,16 +122,6 @@ export default function SignUpPage() {
                   type="text"
                   id="email"
                   className={`login-input ${errors.email
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-set4 font-bold text-neutral-900 dark:text-white "
-              >
-                Email address *
-                <input
-                  type="text"
-                  id="email"
-                  className={`login-input ${errors.email
                     ? "outline-red-800 dark:outline-red-600"
                     : "outline-neutral-500 dark:outline-neutral-300"
                     }`}
@@ -159,7 +149,7 @@ export default function SignUpPage() {
                 htmlFor="password"
                 className="block text-set4 font-bold text-neutral-900 dark:text-white "
               >
-                Password *
+                Password <span className="text-teal-700 dark:text-neutral-100">*</span>
                 <input
                   type="password"
                   id="password"
