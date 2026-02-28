@@ -3,7 +3,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { toast } from "sonner";
 
 interface LoginType {
   email: string;
@@ -43,6 +42,7 @@ export async function signupAction(formData: RegisterType) {
       data: {
         display_name: formData.name,
       },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/confirm`,
     },
   };
 

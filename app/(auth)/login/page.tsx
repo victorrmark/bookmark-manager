@@ -41,14 +41,14 @@ export default function LoginPage() {
       <div className="py-5 px-5 sm:py-8 sm:px-9 w-md  rounded-xl flex flex-col gap-8 bg-white dark:bg-neutral-800 dark:outline-neutral-500">
         <Image
           src={LogoLight}
-          alt="Bookmark Manger Logo"
+          alt="BookMarker Logo"
           width={170}
           height={50}
           className="dark:hidden"
         />
         <Image
           src={LogoDark}
-          alt="Bookmark Manger Logo"
+          alt="BookMarker Logo"
           width={170}
           height={50}
           className="hidden dark:block"

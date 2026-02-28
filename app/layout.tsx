@@ -11,7 +11,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Bookmark Manager",
+  title: "Bookmark Dock",
   description: "Manage all bookmarks for easy access",
 };
 

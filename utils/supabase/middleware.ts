@@ -43,7 +43,8 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/login") ||
     pathname.startsWith("/register") ||
     pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password");
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/confirm");
 
   if (!user && !isAuthPage) {
     const url = request.nextUrl.clone();
