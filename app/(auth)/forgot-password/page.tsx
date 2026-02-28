@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
     const sendResetLink = async (data: LoginFormData) => {
 
         const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
-            redirectTo: `http://localhost:3000/reset-password`,
+            redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password`,
         });
         if (error) {
             toast.error("An error occurred while sending the reset link. Please try again later.", {
