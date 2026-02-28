@@ -20,7 +20,6 @@ export default function ConfirmEmailPage() {
 
             if (error || !data.session) {
                 setSuccess(false)
-<<<<<<< HEAD
                 setLoading(false)
                 return
             }
@@ -34,19 +33,6 @@ export default function ConfirmEmailPage() {
             setTimeout(() => {
                 router.push("/login")
             }, 4000)
-=======
-            } else {
-                setSuccess(true)
-                const timer = setTimeout(() => {
-                    router.push("/login")
-                }, 2000)
-
-                return () => clearTimeout(timer)
-
-            }
-
-            setLoading(false)
->>>>>>> e31f59ef67256b03fad43000dab7bc13041da1b6
         }
 
         handleConfirmation()
