@@ -25,6 +25,7 @@ A modern bookmark manager built with Next.js and Supabase that helps developers 
 - Creation date: Enables Recently Added sorting
 - Last Visited Date: Enables Recently Added sorting
 - Visit Count
+- Drag and Drop to archive/unarchive bookmakrs
 
 ## Tech Stack
 
@@ -111,7 +112,7 @@ pnpm dev
 ```
 
 ## Future Improvements
-- Drag-and-drop bookmark ordering
+<!-- - Drag-and-drop bookmark ordering -->
 - Collections / folders
 - Bookmark sharing
 - Keyboard shortcuts
