@@ -2,7 +2,7 @@
 import { Home, Archive } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-
+import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
 import {
   Sidebar,
   SidebarHeader,
@@ -33,6 +33,20 @@ const items = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { activeCard, setArchiveId, setShowArchiveDialog } = useBookmarkContext();
+
+  const onDrop = (url: string) => {
+    if (!activeCard) return;
+
+    const shouldToggleArchive =
+      (url === "/archived" && !activeCard.is_archived) ||
+      (url === "/home" && activeCard.is_archived);
+
+    if (shouldToggleArchive) {
+      setArchiveId(String(activeCard.id));
+      setShowArchiveDialog(true);
+    }
+  };
 
   return (
     <Sidebar className="border-neutral-300 dark:border-neutral-500">
@@ -57,7 +71,7 @@ export function AppSidebar() {
         </div>
         <SidebarMenu>
           {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
+            <SidebarMenuItem key={item.title} onDrop={() => onDrop(item.url)} onDragOver={e => e.preventDefault()}>
               <SidebarMenuButton asChild isActive={pathname === item.url}>
                 <Link href={item.url}>
                   <item.icon />

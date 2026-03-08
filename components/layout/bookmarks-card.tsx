@@ -9,16 +9,22 @@ import {
 } from "@/components/ui/card";
 import { BookmarkMenuDialog } from "./bookmark-dialog";
 import type { Bookmark } from "@/types/bookmark";
-import { EllipsisVertical, Pin, Eye, Clock, Calendar } from "lucide-react";
+import { useState } from "react";
+import { Pin, Eye, Clock, Calendar } from "lucide-react";
 import Image from "next/image";
+import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
+
 
 interface BookmarkCardProps {
   bookmark: Bookmark;
 }
 
 export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
+  const [isDragging, setIsDtagging] = useState(false);
   const url = new URL(bookmark.url).hostname;
   const imageSrc = bookmark.favicon_url;
+  const { setActiveCard } = useBookmarkContext();
+
 
   const formattedDate = (date: string) => {
 
@@ -40,7 +46,11 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
   ];
 
   return (
-    <Card>
+    <Card draggable
+      onDragStart={() => { setActiveCard(bookmark); setIsDtagging(true) }}
+      onDragEnd={() => { setActiveCard(null); setIsDtagging(false) }}
+      className={`cursor-grab ${isDragging ? "opacity-50" : ""}`}
+    >
       <CardHeader className="flex items-start">
         <Image
           src={imageSrc}

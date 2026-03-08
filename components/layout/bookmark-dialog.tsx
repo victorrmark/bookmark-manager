@@ -39,6 +39,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import EditBookmarkForm from "./editBookmark-form";
 import Link from "next/link";
+import { useBookmarkContext } from "@/app/(dashboard)/BookmarkContext";
+
 
 interface BookmarkCardProps {
   bookmark: Bookmark;
@@ -46,10 +48,13 @@ interface BookmarkCardProps {
 
 export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
   const [showEditDialog, setShowEditDialog] = useState(false);
-  const [showArchiveDialog, setShowArchiveDialog] = useState(false);
+  // const [showArchiveDialog, setShowArchiveDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [archiveId, setArchiveId] = useState<string>("");
+  // const [archiveId, setArchiveId] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string>("");
+
+  const {archiveId, setArchiveId, showArchiveDialog, setShowArchiveDialog} = useBookmarkContext();
+
 
   const { mutateAsync } = usePinBookmark();
   const { mutateAsync: mutateArchiveAsync, isPending: isArchiving } =
@@ -96,6 +101,7 @@ export function BookmarkMenuDialog({ bookmark }: BookmarkCardProps) {
           <Archive className="text-teal-700 dark:text-white size-4" />
         ),
       });
+      setShowArchiveDialog(false);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "something went wrong";
